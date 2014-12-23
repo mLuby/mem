@@ -1,0 +1,6 @@
+task:
+  id: (integer auto)
+  name: (text)
+  description: (text)
+  owner_id: (user_id)
+  prerequisite_ids: [task ids]
