@@ -14,3 +14,9 @@ User research:
 - "Need motivation to do some tasks."
 - "Don't want emails telling me what to do."
 - "I don't get through all my tasks, so they build up and prevent me from working on important things."
+
+asana
+bookmarks
+calendar
+reminders
+evernote
