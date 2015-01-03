@@ -1,0 +1,11 @@
+<ion-view view-title="Tasks">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="task in tasks" ng-click='cycleStatus()' 'href="#/app/tasks/{{task.id}}"'
+        style="text-decoration: {{task.status==='complete' ? 'line-through' : 'initial'}};
+               color: {{task.status==='pending' ? 'grey' : 'initial'}}">
+        {{task.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
