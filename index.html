@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="memory">
 <head>
   <title>Memory</title>
   <link rel="stylesheet" type="text/css" href="app.css">
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angularfire/dist/angularfire.js"></script>
   <script src="app.js"></script>
+  <script src="task/task.js"></script>
 </head>
-<body>
-  <task>Task list
-    <task>Chores
-      <task>Make bed</task>
-      <task>Do dishes</task>
-      <task>Do dishes</task>
-    </task>
-    <task>Money
-      <task>Pay bills</task>
-    </task>
-  </task>
+<body ng-controller="memoryController">
+  <div>Task list
+    <div ng-repeat="task in tasks" ng-controller="taskController">
+      <span ng-click="toggleCompletion()">{{ task.completed ? '[x]' : "[ ]" }}</span>
+      <span>{{ task.title }}</span>
+    </div>
+  </div>
 </body>
 </html>
