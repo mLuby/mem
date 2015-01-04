@@ -1,10 +1,12 @@
 <ion-view view-title="Tasks">
   <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="task in tasks" ng-click='cycleStatus()' 'href="#/app/tasks/{{task.id}}"'
+    <ion-list show-reorder="true">
+      <ion-item ng-repeat="task in tasks"
         style="text-decoration: {{task.status==='complete' ? 'line-through' : 'initial'}};
                color: {{task.status==='pending' ? 'grey' : 'initial'}}">
+        <button ng-click="toggle(task)">Toggle Status</button>
         {{task.title}}
+        <ion-reorder-button class="ion-navicon" on-reorder="reorderTask(task, $fromIndex, $toIndex)"></ion-reorder-button>
       </ion-item>
     </ion-list>
   </ion-content>

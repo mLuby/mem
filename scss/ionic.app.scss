@@ -21,3 +21,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+// Prevent list reorder buttons from pushing content off the left of the page.
+.list-right-editing .item-right-editable .item-content, .item-right-editing.item-right-editable .item-content {
+  -webkit-transform: inherit;
+  transform: inherit; }
+
+// Allow user to click buttons on lists.
+.disable-pointer-events {
+  pointer-events: auto; }

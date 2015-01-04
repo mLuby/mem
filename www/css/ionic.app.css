@@ -7014,3 +7014,10 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.list-right-editing .item-right-editable .item-content, .item-right-editing.item-right-editable .item-content {
+  -webkit-transform: inherit;
+  transform: inherit; }
+
+.disable-pointer-events {
+  pointer-events: auto; }

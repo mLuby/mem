@@ -35,16 +35,22 @@ module.controller('AppController', function($scope, $ionicModal, $timeout) {
 
 module.controller('TasksController', function($scope, Tasks) {
   $scope.tasks = Tasks;
-  $scope.cycleStatus = function(){
-    if(this.task.status === 'complete'){
-      this.task.status = 'incomplete';
-    } else if(this.task.status === 'incomplete'){
-      this.task.status = 'pending';
-    } else if (this.task.status === 'pending'){
-      this.task.status = 'complete';
+  $scope.reorderTask = function(task, fromIndex, toIndex) {
+    // todo maybe modify Tasks directly?
+    $scope.tasks.splice(fromIndex, 1);
+    $scope.tasks.splice(toIndex, 0, task);
+  };
+  $scope.toggle = function(task){
+    if(task.status === 'complete'){
+      task.status = 'incomplete';
+    } else if(task.status === 'incomplete'){
+      task.status = 'pending';
+    } else if (task.status === 'pending'){
+      task.status = 'complete';
     }
   }
 })
 
 module.controller('TaskController', function($scope, $stateParams) {
+  // todo should probably handle toggleTask here rather than in parent.
 });
