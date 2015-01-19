@@ -27,3 +27,6 @@ Ionic development commands:
 - Build your app: `$ ionic build <PLATFORM>`
 - Simulate your app: `$ ionic emulate <PLATFORM>`
 - Run your app on a device: `$ ionic run <PLATFORM>`
+
+Business Mode:
+- allow easy delegation of a task to TaskRabbit
