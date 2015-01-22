@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style type="text/css">
+    input,label{
+      display: block;
+    }
+    .option{
+      box-sizing: border-box;
+      margin: 5px;
+      padding: 10px;
+      border: thin solid green;
+      display: inline;
+      color: green;
+    }
+    input[type="submit"]{
+      background-color: white;
+      color: green;
+    }
+    input[type="submit"]:hover{
+      background-color: green;
+      color: white;
+    }
+    .selected{
+      background-color: green;
+      color: white;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('.option').click(function(){
+      $(this).toggleClass('selected');
+    });
+    $('.toggleTask').click(function(){
+      $(this).parent().children().toggle();
+      $(this).toggle();
+      $(this).next().toggle();
+      console.log($(this).text()==='v');
+      $(this).text($(this).text()==='v' ? '>' : 'v');
+    });
+    $('#addTask').click(function(){
+      $(this).parent().children().hide();
+    });
+  });
+  </script>
+</head>
+<body>
+<button id="addTask">Add Task</button>
+<div class="task">
+  <label>What do you need to do?</label>
+  <span class="toggleTask">v</span>
+  <input class="option taskName" type="text" placeholder="task"/>
+
+  <label>How long could it take?</label>
+  <input class="option" type="time" />
+
+  <label>Where do you have to do it?</label>
+  <input class="option" type="text" placeholder="URL" />
+  <input class="option" type="text" placeholder="Email" />
+  <input class="option" type="text" placeholder="Address" />
+  <div class="option">Home</div>
+  <div class="option">Work</div>
+  <div class="option selected">Anywhere</div>
+
+  <label>When do you need to have it finished before? *</label>
+  <input class="option" type="text" placeholder="relative time" />
+  <input class="option" type="date" />
+
+  <label>What conditions must be met before you can do this?</label>
+  <input class="option" type="text" />
+  <input class="option" type="submit" />
+</div>
+</body>
+</html>
