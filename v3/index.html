@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://code.angularjs.org/1.2.13/angular.js"></script>
+  <script src="app.js"></script>
+  <script src="controllers.js"></script>
+  <script src="services.js"></script>
+</head>
+<body ng-app="Memory">
+  <table ng-controller="tasksController as tasks">
+    <caption>Task list:</caption>
+    <tbody>
+      <tr class="task" ng-repeat="task in tasks.list">
+        <td><button ng-click="tasks.start(task)">Start</button></td>
+        <td class="name">{{task.name}}</td>
+        <td class="duration">{{task.duration}}</td>
+        <td class="dueBy">{{task.dueBy}}</td>
+        <td class="blocking">{{task.blocking}}</td>
+        <td><button ng-click="tasks.delete(task)">Delete</button></td>
+      </tr>
+      <tr class="task" ng-controller="newTaskController as newTask">
+        <td><button ng-click="newTask.clear()">Cancel</button></td>
+        <td class="name"><input type="text" ng-model="newTask.name" /></td>
+        <td class="duration"><input type="time" ng-model="newTask.duration" /></td>
+        <td class="dueBy"><input type="date" ng-model="newTask.dueBy" /></td>
+        <td class="blocking"></td>
+        <td><button ng-click="newTask.add(newTask.name, newTask.duration, newTask.dueBy)">Add</button></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
