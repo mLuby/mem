@@ -3,28 +3,36 @@
 <head>
   <script src="http://code.angularjs.org/1.2.13/angular.js"></script>
   <script src="app.js"></script>
-  <script src="controllers.js"></script>
   <script src="services.js"></script>
+  <script src="controllers.js"></script>
 </head>
 <body ng-app="Memory">
-  <table ng-controller="tasksController as tasks">
+  <table ng-controller="tasksController as tasksCtrl">
     <caption>Task list:</caption>
     <tbody>
-      <tr class="task" ng-repeat="task in tasks.list">
-        <td><button ng-click="tasks.start(task)">Start</button></td>
+      <tr>
+        <th></th>
+        <th>Task</th>
+        <th>Duration</th>
+        <th>Due By</th>
+        <th>Blocking</th>
+        <th></th>
+      </tr>
+      <tr class="task" ng-repeat="task in tasksCtrl.list" ng-controller="taskController as taskCtrl">
+        <td class="button"><button ng-click="taskCtrl.start(task)">Start</button></td>
         <td class="name">{{task.name}}</td>
         <td class="duration">{{task.duration}}</td>
         <td class="dueBy">{{task.dueBy}}</td>
         <td class="blocking">{{task.blocking}}</td>
-        <td><button ng-click="tasks.delete(task)">Delete</button></td>
+        <td class="button"><button ng-click="taskCtrl.delete(task)">Delete</button></td>
       </tr>
       <tr class="task" ng-controller="newTaskController as newTask">
-        <td><button ng-click="newTask.clear()">Cancel</button></td>
+        <td class="button"><button ng-click="newTask.clear()">Cancel</button></td>
         <td class="name"><input type="text" ng-model="newTask.name" /></td>
         <td class="duration"><input type="time" ng-model="newTask.duration" /></td>
         <td class="dueBy"><input type="date" ng-model="newTask.dueBy" /></td>
         <td class="blocking"></td>
-        <td><button ng-click="newTask.add(newTask.name, newTask.duration, newTask.dueBy)">Add</button></td>
+        <td class="button"><button ng-click="newTask.add(newTask.name, newTask.duration, newTask.dueBy)">Add</button></td>
       </tr>
     </tbody>
   </table>
