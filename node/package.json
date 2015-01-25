@@ -1,0 +1,22 @@
+{
+  "name": "Memory",
+  "version": "0.1.0",
+  "description": "Node only version of Memory",
+  "main": "Memory.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mLuby/Memory"
+  },
+  "author": "Mike Luby <Michael@mLuby.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mLuby/Memory/issues"
+  },
+  "homepage": "https://github.com/mLuby/Memory",
+  "dependencies": {
+    "node-persist": "0.0.3"
+  }
+}
