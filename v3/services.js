@@ -10,6 +10,7 @@ app.service('tasks', ['storage', function(storage){
     _getTasks();
   };
   var _findTaskIndex = function(task){
+    // unacceptable if multiple null tasks allowed.
     return _tasks.map(function(task){return task.name;}).indexOf(task.name);
   }
   var _deleteTask = function(task){

@@ -15,11 +15,12 @@ app.controller('taskController', ['tasks', function(tasks){
 
 app.controller('newTaskController', ['tasks', function(tasks){
   this.add = function(name, duration, dueBy){
-    tasks.add({name: name, duration: duration, dueBy: dueBy});
+    tasks.add({name: name, description: description, duration: duration, dueBy: dueBy});
     this.clear();
   };
   this.clear = function(){
     this.name = null;
+    this.description = null;
     this.duration = null;
     this.dueBy = null;
   };
