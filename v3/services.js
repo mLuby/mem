@@ -1,19 +1,24 @@
 var app = angular.module('Memory');
 
-app.service('tasksService', ['tasks',
-  function(tasks){
+app.service('tasks', ['storage',
+  function(storage){
+    this.tasks = [];
     this.getTasks = function(){
-      return tasks;
+      this.tasks = storage.get('tasks');
+      return this.tasks;
     };
     this.addTask = function(task){
-      tasks.push(task)
+      storage.add('tasks', task);
+      return this.getTasks();
     };
     this.findTaskIndex = function(task){
-      return tasks.map(function(task){return task.name;}).indexOf(task.name);
+      return this.tasks.map(function(task){return task.name;}).indexOf(task.name);
     }
     this.deleteTask = function(task){
-      var taskIndex = this.findTaskIndex(task);
-      tasks.splice(taskIndex, 1);
+      return storage.delete('tasks', this.findTaskIndex(task));
+    };
+    this.clearTasks = function(){
+      console.log('cleared', storage.deleteAll('tasks') );
     };
   }
 ]);

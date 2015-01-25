@@ -1,4 +1,4 @@
-var app = angular.module('Memory', []);
+var app = angular.module('Memory', ['LocalStorage']);
 
 app.value('tasks', [
     {name:'Buy milk', duration:'30m', dueBy:'Tomorrow', blocking:'4h'}

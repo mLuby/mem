@@ -1,22 +1,24 @@
 var app = angular.module('Memory');
 
-app.controller('tasksController', ['tasksService', function(tasksService){
-  this.list = tasksService.getTasks();
+app.controller('tasksController', ['tasks', function(tasks){
+  tasks.getTasks();
+  this.list = tasks.tasks;
+  this.clearTasks = tasks.clearTasks;
 }]);
 
-app.controller('taskController', ['tasksService', function(tasksService){
+app.controller('taskController', ['tasks', function(tasks){
   this.start = function(task){
     console.log('Starting',task);
   };
   this.delete = function(task){
     console.log('Deleting', task);
-    tasksService.deleteTask(task);
+    tasks.deleteTask(task);
   };
 }]);
 
-app.controller('newTaskController', ['tasksService', function(tasksService){
+app.controller('newTaskController', ['tasks', function(tasks){
   this.add = function(name, duration, dueBy){
-    tasksService.addTask({name: name, duration: duration, dueBy: dueBy});
+    tasks.addTask({name: name, duration: duration, dueBy: dueBy});
     this.clear();
   };
   this.clear = function(){
