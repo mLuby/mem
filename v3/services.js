@@ -21,6 +21,13 @@ app.service('tasks', ['storage', function(storage){
     var tasksCopy = _tasks.map(function(t){ return t;});
     tasksCopy.forEach(function(task){ _deleteTask(task); });
   };
+  this.start = function(task){
+    console.log('Starting',task);
+  };
+  this.update = function(task){
+    storage.update('tasks', _findTaskIndex(task), task);
+    _getTasks();
+  };
   this.list = _tasks;
   this.load = _getTasks;
   this.add = _addTask;

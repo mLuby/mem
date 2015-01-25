@@ -8,9 +8,8 @@ app.controller('tasksController', ['tasks', function(tasks){
 }]);
 
 app.controller('taskController', ['tasks', function(tasks){
-  this.start = function(task){
-    console.log('Starting',task);
-  };
+  this.start = tasks.start;
+  this.update = tasks.update;
   this.delete = tasks.delete;
 }]);
 

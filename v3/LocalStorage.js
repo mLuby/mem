@@ -20,5 +20,10 @@ app.service('storage', function(){
     array.splice(index, 1);
     _set(key, array);
     return previousValue;
-  }
+  };
+  this.update = function(key, index, value){
+    var array = this.get(key);
+    array[index] = value;
+    _set(key, array);
+  };
 });
