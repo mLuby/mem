@@ -1,24 +1,29 @@
 var app = angular.module('Memory');
 
-app.service('tasks', ['storage',
-  function(storage){
-    this.tasks = [];
-    this.getTasks = function(){
-      this.tasks = storage.get('tasks');
-      return this.tasks;
-    };
-    this.addTask = function(task){
-      storage.add('tasks', task);
-      return this.getTasks();
-    };
-    this.findTaskIndex = function(task){
-      return this.tasks.map(function(task){return task.name;}).indexOf(task.name);
-    }
-    this.deleteTask = function(task){
-      return storage.delete('tasks', this.findTaskIndex(task));
-    };
-    this.clearTasks = function(){
-      console.log('cleared', storage.deleteAll('tasks') );
-    };
+app.service('tasks', ['storage', function(storage){
+  var _tasks = [];
+  var _getTasks = function(){
+    angular.copy(storage.get('tasks'), _tasks);
+  };
+  var _addTask = function(task){
+    storage.add('tasks', task);
+    _getTasks();
+  };
+  var _findTaskIndex = function(task){
+    return _tasks.map(function(task){return task.name;}).indexOf(task.name);
   }
-]);
+  var _deleteTask = function(task){
+    storage.delete('tasks', _findTaskIndex(task));
+    _getTasks();
+  };
+  var _deleteAllTasks = function(){
+    // Copy tasks because delete>getTasks changes tasks' indexes.
+    var tasksCopy = _tasks.map(function(t){ return t;});
+    tasksCopy.forEach(function(task){ _deleteTask(task); });
+  };
+  this.list = _tasks;
+  this.load = _getTasks;
+  this.add = _addTask;
+  this.delete = _deleteTask;
+  this.deleteAll = _deleteAllTasks;
+}]);
