@@ -1,6 +1,8 @@
 Memory
 ======
 
+#currently breaking this project up into three phases: node, angular, and ionic. 
+
 User Stories:
 - [ ] I can create tasks that can be marked complete.
 - [ ] I can designate task prerequisites, including other tasks, available calendar time, items, etc.
