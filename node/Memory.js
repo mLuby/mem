@@ -1,5 +1,5 @@
 var storage = require('./Storage.js');
-
+var randomTask = require('./randomTask.js');
 var command = process.argv[2];
 /*
 add
@@ -13,16 +13,25 @@ var args = process.argv.slice(3);
 // console.log('args', args);
 if(command==='add'){
   console.log('Adding task...');
+  if(args.length === 0){
+    console.log(randomTask.new());
+  }
   storage.add(args);
-}
-if(command==='done'){
-  console.log('Completing task...');
-  storage.done(args[0]);
 }
 if(command==='list'){
   console.log('Listing tasks...');
-  storage.list().forEach(function(task){
-    console.log(task);
-    // console.log(typeof task === 'object' ? JSON.parse(task) : task);
+  storage.list().forEach(function(task, index){
+    console.log(index+': '+task);
   });
+}
+if(command==='done'){
+  console.log('Completing task \''+args[0]+'\'');
+  storage.done(args[0]);
+}
+if(command==='delete'){
+  console.log('deleting task \''+args[0]+'\'');
+  storage.delete(args[0]);
+}
+if(command==='test'){
+  console.log(storage.test(args[0]));
 }
