@@ -8,15 +8,16 @@ if (typeof localStorage === "undefined" || localStorage === null) {
   localStorage = new LocalStorage('./.storage');
 }
 
-var createTask = function(args){
-  saveTaskByID(localStorage.length, {name:args[0], dueBy:args[1], duration:args[2]});
+var create = function(args){
+  console.log('Adding task', args);
+  save(localStorage.length, args);
 };
 
-var saveTaskByID = function(id, task){
+var save = function(id, task){
   localStorage.setItem(id, JSON.stringify(task));
 };
 
-var getTaskByID = function(id){
+var get = function(id){
   return JSON.parse(localStorage.getItem(localStorage.key(id)));
 }
 
@@ -28,34 +29,35 @@ var idOrKey = function(keyOrID){
   }
 }
 
-var completeTask = function(id){
-  var task = getTaskByID(id);
-  task.status = 'done';
-  saveTaskByID(id, task);
-};
-
 var list = function(){
+  console.log('Listing tasks...');
   var results = [];
-  for(var i=0; i<localStorage.length; i++){
-    results.push(localStorage.getItem(localStorage.key(i)));
+  for(var id=0; id<localStorage.length; id++){
+    results.push(JSON.stringify(get(id)));
   }
   return results;
 };
 
-var editAttribute = function(key, attr, value){
-  var task = getTask(key);
-  task[attr] = value;
-  saveTask(key, task);
+var mark = function(id, key, value){
+  var task = get(id);
+  task[key] = value;
+  save(id, task);
 };
 
-var deleteTaskByID = function(id){
+var remove = function(id){
+  console.log('deleting task #',id);
   localStorage.removeItem(localStorage.key(id));
 };
 
+var requires = function(id, reqID){
+  console.log('\''+get(id).name+'\' requires \''+get(reqID).name+'\'');
+  mark(id, 'requires', get(reqID));
+}
+
 module.exports = {
-  add: createTask,
-  done: completeTask,
-  delete: deleteTaskByID,
+  add: create,
+  mark: mark,
+  delete: remove,
   list: list,
-  test: idOrKey
+  requires: requires
 };

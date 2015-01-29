@@ -1,6 +1,6 @@
 var noun = ['people','history' ,'way' ,'art' ,'world' ,'information' ,'map' ,'two' ,'family'  ,'government'  ,'health'  ,'system'  ,'computer'];
 var verb = ['buy', 'get', 'sell', 'ask', 'question', 'return', 'borrow'];
-var time = ['s', 'm', 'h', 'd', 'w', 'f', 'm', 'q', 'y'];
+var time = ['s', 'm', 'h', 'd', 'w', 'f', 'n', 'q', 'y'];
 var rnd = function(nOrArray){
   if(Array.isArray(nOrArray)){
     return nOrArray[rnd(nOrArray.length)]
