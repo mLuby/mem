@@ -12,8 +12,20 @@
     case 'get':
       db.get(args[0]);
       break;
+    case 'id':
+      db.id(args[0]);
+      break;
     case 'list':
       db.list();
+      break;
+    case 'examine':
+      db.examine(args[0]);
+      break;
+    case 'set':
+      db.set(args[0], args[1], args[2]);
+      break;
+    case 'tag':
+      db.tag(args[0], args[1]);
       break;
     default:
       console.log('  Commands:\n'
