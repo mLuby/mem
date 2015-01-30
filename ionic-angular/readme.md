@@ -1,7 +1,9 @@
 Memory
 ======
 
-#currently breaking this project up into three phases: node, angular, and ionic. 
+Side project on tasks, bookmarks, etc.
+
+#currently breaking this project up into three phases: node, angular, and ionic.
 
 User Stories:
 - [ ] I can create tasks that can be marked complete.
