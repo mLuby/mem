@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mLuby/Memory",
   "dependencies": {
-    "node-persist": "0.0.3"
+    "chalk": "^0.5.1",
+    "node-localstorage": "^0.3.6"
   }
 }
