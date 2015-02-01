@@ -9,10 +9,7 @@
       mem.add(args[0]);
       break;
     case 'get':
-      mem.get(args[0]);
-      break;
-    case 'id':
-      mem.id(args[0]);
+      displayTask(mem.get(args[0]));
       break;
     case 'list':
       mem.list().forEach(function(task){
@@ -20,10 +17,7 @@
       });
       break;
     case 'examine':
-      mem.examine(args[0]);
-      break;
-    case 'set':
-      mem.set(args[0], args[1], args[2]);
+      console.log(args[0]+': '+mem.examine(args[0]));
       break;
     case 'tag':
       mem.tag(args[0], args[1]);
@@ -48,13 +42,14 @@
         'default': chalk.bgYellow.black,
         'done': chalk.inverse,
         'meta': chalk.bgBlue.grey,
-        'v2': chalk.bgGreen.black
+        'v2': chalk.bgGreen.black,
+        'housing': chalk.bgRed.black
       },
       'incomplete': chalk.green,
       'complete': function(){ return chalk.grey.dim(chalk.stripColor.apply(null, arguments));},
       'other': chalk.grey
     };
-    var taskString = ''+format.id(task.id)+format.other(': ')+format.name(task.name);
+    var taskString = ' '+format.id(task.id)+format.other(': ')+format.name(task.name);
     var status = format.incomplete;
     if(task.tags){
       status = task.tags.indexOf('done') > -1 ? format.complete : format.incomplete;
