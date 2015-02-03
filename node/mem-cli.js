@@ -3,6 +3,13 @@
   var command = process.argv[2];
   var args = process.argv.slice(3);
   var mem = require('./mem.js');
+  var chalk = require('chalk');
+  var style = {
+    mem: chalk.grey.dim,
+    cmd: chalk.yellow,
+    arg: chalk.cyan
+  }
+
 
   switch(command){
     case 'add':
@@ -20,21 +27,23 @@
       console.log(args[0]+': '+mem.examine(args[0]));
       break;
     case 'tag':
-      mem.tag(args[0], args[1]);
+      displayTask(mem.tag(args[0], args[1]));
+      break;
+    case 'untag':
+      displayTask(mem.untag(args[0], args[1]));
       break;
     default:
-      console.log('  Commands:\n'
-        +'    add [taskName]\n'
-        +'    get [taskName]\n'
-        +'    examine [property]\n'
-        +'    list all|[tagName]\n'
-        +'    set [property] [value]\n'
-        +'    tag [tagName]');
+      console.log(' '+chalk.underline('Commands:\n')
+        +style.mem(' mem ')+style.cmd('add ')+style.arg('taskName\n')
+        +style.mem(' mem ')+style.cmd('get ')+style.arg('taskName\n')
+        +style.mem(' mem ')+style.cmd('examine ')+style.arg('property\n')
+        +style.mem(' mem ')+style.cmd('list\n')
+        +style.mem(' mem ')+style.cmd('tag ')+style.arg('tagName\n')
+        +style.mem(' mem ')+style.cmd('untag ')+style.arg('tagName'));
   }
 
   function displayTask(task){
     // Text console.log formatting: https://github.com/sindresorhus/chalk/blob/master/readme.md
-    var chalk = require('chalk');
     var format = {
       'id': chalk.red,
       'name': chalk.white,
