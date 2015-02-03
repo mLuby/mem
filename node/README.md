@@ -27,6 +27,19 @@ Typical use will start with `$ mem add 'my first task'`. From there you can:
 - `$ mem untag` ['tagName']
 - `$ mem examine` [property, eg 'tags']
 
+###Design:
+What mem does:
+- ease of use
+- task dependencies
+- Gantt process
+- synchronizes across machines/apis
+- interface through email
+
+What mem doesn't do:
+- collaboration
+- cards
+- mobile (yet?)
+
 ###Contribute
 - Open [issues](https://github.com/mLuby/mem/issues), both bugs and feature requests.
 - [Pull request](https://github.com/mLuby/mem/pulls) code you've fixed, improved, or added.
