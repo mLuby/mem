@@ -1,6 +1,5 @@
-![mem](http://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Phoenician_mem.svg/85px-Phoenician_mem.svg.png)
-mem: command line task manager.
-===
+# ![mem](http://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Phoenician_mem.svg/85px-Phoenician_mem.svg.png) mem: the task CLI
+
 Concept: minimal UI, maximal helpfulness
 
 ###Install:
