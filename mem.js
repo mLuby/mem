@@ -13,7 +13,7 @@
     storage.setItem('.current', task.id);
   };
   var getTaskByID = function(id){
-    return storage.key(id) ? JSON.parse(storage.getItem(id)) : null;
+    return storage.getItem(id) ? JSON.parse(storage.getItem(id)) : null;
   }
   var setTaskToID = function(task, id){
     storage.setItem(id, JSON.stringify(task));
@@ -122,6 +122,15 @@
     });
   }
 
+  var removeTask = function(taskNameOrID){
+    if( taskNameOrID === 'current' ){
+      var currentTask = getCurrentTask();
+      storage.removeItem( currentTask.id );
+      currentTask.id = 'deleted';
+      return currentTask;
+    }
+  };
+
   module.exports = {
     add: function(taskName){ addTask(taskName); return getCurrentTask(); },
     get: getTask,
@@ -130,7 +139,8 @@
     tag: function(tagName){ setAttribute('tags', '['+tagName+']'); return getCurrentTask(); },
     untag: function(tagName){ removeFromArray('tags', tagName); return getCurrentTask(); },
     find: findTask,
-    edit: function(attr, value){ setAttribute(attr, value); return getCurrentTask(); }
+    edit: function(attr, value){ setAttribute(attr, value); return getCurrentTask(); },
+    remove: function(taskNameOrID){ return removeTask(taskNameOrID); }
   };
 
 })();

@@ -8,21 +8,21 @@
     arg: chalk.cyan
   }
   var switchObj = {
-    'add': function(){ displayTask(mem.add(arguments[0])); },
-    'remove': function(){ displayTask(mem.remove(arguments[0])); },
-    'get': function(){ displayTask(mem.get(arguments[0])); },
+    'add': function(taskName){ displayTask(mem.add(taskName)); },
+    'remove': function(taskName){ displayTask(mem.remove(taskName)); },
+    'get': function(taskNameOrID){ displayTask(mem.get(taskNameOrID)); },
     'list': function(){ mem.list().forEach(function(task){
                           displayTask(task);
                         }); },
-    'tag':  function(){ displayTask(mem.tag(arguments[0])); },
-    'untag':  function(){ displayTask(mem.untag(arguments[0])); },
-    'examine': function(){ console.log(arguments[0]+': '+mem.examine(arguments[0])); },
-    'find': function(thing1){ console.log('thing1', thing1); mem.find(arguments[0]).forEach(function(task){
+    'tag':  function(tagName){ displayTask(mem.tag(tagName)); },
+    'untag':  function(tagName){ displayTask(mem.untag(tagName)); },
+    'examine': function(attr){ console.log(attr+': '+mem.examine(attr)); },
+    'find': function(searchString){ mem.find(arguments[0]).forEach(function(task){
                                 displayTask(task);
                               }); },
-    'edit': function(){
-      var attr = arguments[0].split(':')[0];
-      var value = arguments[0].split(':')[1];
+    'edit': function(attrValuePair){
+      var attr = attrValuePair.split(':')[0];
+      var value = attrValuePair.split(':')[1];
       displayTask(mem.edit(attr, value)); }
   }
 
