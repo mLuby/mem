@@ -37,6 +37,9 @@
         displayTask(task);
       });
       break;
+    case 'edit':
+      displayTask(mem.edit(args[0], args[1]));
+      break;
     default:
       console.log(' '+chalk.underline('Commands:\n')
         +style.mem(' mem ')+style.cmd('add ')+style.arg('\'taskName\'\n')
@@ -58,6 +61,7 @@
         'done': chalk.inverse,
         'meta': chalk.bgBlue.grey,
         'v2': chalk.bgGreen.black,
+        'bug': chalk.bgRed.black,
         'housing': chalk.bgRed.black
       },
       'incomplete': chalk.green,

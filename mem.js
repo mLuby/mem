@@ -54,8 +54,10 @@
     }
     if(value && Array.isArray(current[attr]) ){
      current[attr].push(value)
-    } else {
+    } else if ( attr !== 'id'){
       current[attr] = value;
+    } else {
+      return null;
     }
     setTaskToID(current, current.id);
   };
@@ -127,7 +129,8 @@
     examine: examineAttribute,
     tag: function(tagName){ setAttribute('tags', '['+tagName+']'); return getCurrentTask(); },
     untag: function(tagName){ removeFromArray('tags', tagName); return getCurrentTask(); },
-    find: findTask
+    find: findTask,
+    edit: function(attr, value){ setAttribute(attr, value); return getCurrentTask(); }
   };
 
 })();
