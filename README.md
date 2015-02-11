@@ -11,7 +11,7 @@ minimal UI, maximal helpfulness
     ```bash
 $ echo "mem() { 
       cd $(pwd); 
-      node mem-cli.js '\$@'; 
+      node mem-cli.js "\$@"; 
       cd - > /dev/null; 
 }" >> ~/.bash_profile 
     ```
