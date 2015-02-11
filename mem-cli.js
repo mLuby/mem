@@ -9,8 +9,20 @@
   }
   var switchObj = {
     'add': function(){ displayTask(mem.add(arguments[0])); },
-    'tag': function(){ displayTask(mem.tag(arguments[0])); },
     'get': function(){ displayTask(mem.get(arguments[0])); },
+    'list': function(){ mem.list().forEach(function(task){
+                          displayTask(task);
+                        }); },
+    'tag':  function(){ displayTask(mem.tag(arguments[0])); },
+    'untag':  function(){ displayTask(mem.untag(arguments[0])); },
+    'examine': function(){ console.log(arguments[0]+': '+mem.examine(arguments[0])); },
+    'find': function(thing1){ console.log('thing1', thing1); mem.find(arguments[0]).forEach(function(task){
+                                displayTask(task);
+                              }); },
+    'edit': function(){
+      var attr = arguments[0].split(':')[0];
+      var value = arguments[0].split(':')[1];
+      displayTask(mem.edit(attr, value)); }
   }
 
   var doCommand = function(parameters){
