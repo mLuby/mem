@@ -44,6 +44,29 @@
     setTaskToID(current, current.id);
   };
 
+  var setAttribute = function(attr, value){
+    var current = getCurrentTask();
+    if(value[0]==='[' && value[value.length-1]===']'){
+      // Don't erase existing array, but create a new one if needed.
+      current[attr] = Array.isArray(current[attr]) ? current[attr] : [];
+      // Get the inner value of the array string, eg 'meta' from '[meta]'.
+      value = value.slice(1,value.length-1);
+    }
+    if(value && Array.isArray(current[attr]) ){
+     current[attr].push(value)
+    } else {
+      current[attr] = value;
+    }
+    setTaskToID(current, current.id);
+  };
+
+  var removeFromArray = function(attr, value){
+    var current = getCurrentTask();
+    var array = current[attr];
+    array.splice(array.indexOf(value), 1);
+    setTaskToID(current, current.id);
+  }
+
   var addTask = function(taskName){
     var task = getTaskByName(taskName);
     if(task === null){
@@ -79,7 +102,7 @@
     list: listTasks,
     examine: examineAttribute,
     tag: function(tagName){ setAttribute('tags', '['+tagName+']'); return getCurrentTask(); },
-    untag: function(tagName){ setAttribute('tags', '['+tagName+']'); return getCurrentTask(); }
+    untag: function(tagName){ removeFromArray('tags', tagName); return getCurrentTask(); }
   };
 
 })();
