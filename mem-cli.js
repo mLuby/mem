@@ -1,7 +1,5 @@
 (function(){
   'use strict';
-  var command = process.argv[2];
-  var args = process.argv.slice(3);
   var mem = require('./mem.js');
   var chalk = require('chalk');
   var style = {
@@ -9,49 +7,36 @@
     cmd: chalk.yellow,
     arg: chalk.cyan
   }
-
-
-  switch(command){
-    case 'add':
-      displayTask(mem.add(args[0]));
-      break;
-    case 'get':
-      displayTask(mem.get(args[0]));
-      break;
-    case 'list':
-      mem.list().forEach(function(task){
-        displayTask(task);
-      });
-      break;
-    case 'examine':
-      console.log(args[0]+': '+mem.examine(args[0]));
-      break;
-    case 'tag':
-      displayTask(mem.tag(args[0]));
-      break;
-    case 'untag':
-      displayTask(mem.untag(args[0]));
-      break;
-    case 'find':
-      mem.find(args[0]).forEach(function(task){
-        displayTask(task);
-      });
-      break;
-    case 'edit':
-      displayTask(mem.edit(args[0], args[1]));
-      break;
-    default:
-      console.log(' '+chalk.underline('Commands:\n')
-        +style.mem(' mem ')+style.cmd('add ')+style.arg('\'taskName\'\n')
-        +style.mem(' mem ')+style.cmd('get ')+style.arg('taskName\n')
-        +style.mem(' mem ')+style.cmd('examine ')+style.arg('property\n')
-        +style.mem(' mem ')+style.cmd('list\n')
-        +style.mem(' mem ')+style.cmd('tag ')+style.arg('tagName\n')
-        +style.mem(' mem ')+style.cmd('untag ')+style.arg('tagName\n')
-        +style.mem(' mem ')+style.cmd('find ')+style.arg('\'search string\''));
+  var switchObj = {
+    'add': function(){ displayTask(mem.add(arguments[0])); },
+    'tag': function(){ displayTask(mem.tag(arguments[0])); },
+    'get': function(){ displayTask(mem.get(arguments[0])); },
   }
 
-  function displayTask(task){
+  var doCommand = function(parameters){
+    var command;
+    var args;
+    if(parameters){
+      var command = parameters[0];
+      var args = parameters.slice(1);
+    } else {
+      var command = process.argv[2];
+      var args = process.argv.slice(3);
+    }
+
+    if( switchObj.hasOwnProperty(command) ){
+      // assuming 1 arg per command
+      switchObj[command](args.shift());
+      // allows chaining commands
+      if(args.length > 0){
+        doCommand(args);
+      }
+    } else {
+      showHelp();
+    }
+  }
+
+  var displayTask = function(task){
     // Text console.log formatting: https://github.com/sindresorhus/chalk/blob/master/readme.md
     var format = {
       'id': chalk.red,
@@ -81,4 +66,17 @@
     taskString = status(taskString);
     console.log(taskString);
   };
+
+  var showHelp = function(){
+    console.log(' '+chalk.underline('Commands:\n')
+      +style.mem(' mem ')+style.cmd('add ')+style.arg('\'taskName\'\n')
+      +style.mem(' mem ')+style.cmd('get ')+style.arg('taskName\n')
+      +style.mem(' mem ')+style.cmd('examine ')+style.arg('property\n')
+      +style.mem(' mem ')+style.cmd('list\n')
+      +style.mem(' mem ')+style.cmd('tag ')+style.arg('tagName\n')
+      +style.mem(' mem ')+style.cmd('untag ')+style.arg('tagName\n')
+      +style.mem(' mem ')+style.cmd('find ')+style.arg('\'search string\''));
+  };
+
+  doCommand();
 })();
