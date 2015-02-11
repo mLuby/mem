@@ -9,6 +9,7 @@
   }
   var switchObj = {
     'add': function(){ displayTask(mem.add(arguments[0])); },
+    'remove': function(){ displayTask(mem.remove(arguments[0])); },
     'get': function(){ displayTask(mem.get(arguments[0])); },
     'list': function(){ mem.list().forEach(function(task){
                           displayTask(task);
@@ -81,13 +82,15 @@
 
   var showHelp = function(){
     console.log(' '+chalk.underline('Commands:\n')
-      +style.mem(' mem ')+style.cmd('add ')+style.arg('\'taskName\'\n')
-      +style.mem(' mem ')+style.cmd('get ')+style.arg('taskName\n')
+      +style.mem(' mem ')+style.cmd('add ')+style.arg('\'task name\'\n')
+      +style.mem(' mem ')+style.cmd('get ')+style.arg('[id|\'task name\']\n')
       +style.mem(' mem ')+style.cmd('examine ')+style.arg('property\n')
       +style.mem(' mem ')+style.cmd('list\n')
       +style.mem(' mem ')+style.cmd('tag ')+style.arg('tagName\n')
       +style.mem(' mem ')+style.cmd('untag ')+style.arg('tagName\n')
-      +style.mem(' mem ')+style.cmd('find ')+style.arg('\'search string\''));
+      +style.mem(' mem ')+style.cmd('find ')+style.arg('\'search string\'\n')
+      +style.mem(' mem ')+style.cmd('remove ')+style.arg('current\n')
+    );
   };
 
   doCommand();
