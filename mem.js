@@ -96,13 +96,38 @@
     return getCurrentTask()[attr];
   };
 
+  var findTask = function(searchString){
+    return listTasks().filter(function(task){
+      for(var key in task){
+        var value = task[key];
+        if( typeof value === 'number' ){
+          // Intentionally using fuzzy equality.
+          if( value == searchString ){
+            return true;
+          }
+        } else if( typeof value === 'string' ){
+          if( value.indexOf( searchString )>=0 ){
+            return true;
+          }
+        } else if( Array.isArray(value) ){
+          if( value.indexOf( searchString )>=0 ){
+            return true;
+          }
+        } else {
+          return false;
+        }
+      }
+    });
+  }
+
   module.exports = {
     add: function(taskName){ addTask(taskName); return getCurrentTask(); },
     get: getTask,
     list: listTasks,
     examine: examineAttribute,
     tag: function(tagName){ setAttribute('tags', '['+tagName+']'); return getCurrentTask(); },
-    untag: function(tagName){ removeFromArray('tags', tagName); return getCurrentTask(); }
+    untag: function(tagName){ removeFromArray('tags', tagName); return getCurrentTask(); },
+    find: findTask
   };
 
 })();

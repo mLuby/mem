@@ -32,14 +32,20 @@
     case 'untag':
       displayTask(mem.untag(args[0]));
       break;
+    case 'find':
+      mem.find(args[0]).forEach(function(task){
+        displayTask(task);
+      });
+      break;
     default:
       console.log(' '+chalk.underline('Commands:\n')
-        +style.mem(' mem ')+style.cmd('add ')+style.arg('taskName\n')
+        +style.mem(' mem ')+style.cmd('add ')+style.arg('\'taskName\'\n')
         +style.mem(' mem ')+style.cmd('get ')+style.arg('taskName\n')
         +style.mem(' mem ')+style.cmd('examine ')+style.arg('property\n')
         +style.mem(' mem ')+style.cmd('list\n')
         +style.mem(' mem ')+style.cmd('tag ')+style.arg('tagName\n')
-        +style.mem(' mem ')+style.cmd('untag ')+style.arg('tagName'));
+        +style.mem(' mem ')+style.cmd('untag ')+style.arg('tagName\n')
+        +style.mem(' mem ')+style.cmd('find ')+style.arg('\'search string\''));
   }
 
   function displayTask(task){
