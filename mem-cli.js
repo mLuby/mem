@@ -13,7 +13,7 @@
 
   switch(command){
     case 'add':
-      mem.add(args[0]);
+      displayTask(mem.add(args[0]));
       break;
     case 'get':
       displayTask(mem.get(args[0]));
@@ -27,10 +27,10 @@
       console.log(args[0]+': '+mem.examine(args[0]));
       break;
     case 'tag':
-      displayTask(mem.tag(args[0], args[1]));
+      displayTask(mem.tag(args[0]));
       break;
     case 'untag':
-      displayTask(mem.untag(args[0], args[1]));
+      displayTask(mem.untag(args[0]));
       break;
     default:
       console.log(' '+chalk.underline('Commands:\n')

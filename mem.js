@@ -5,81 +5,81 @@
     var LocalStorage = require('node-localstorage').LocalStorage;
     var localStorage = new LocalStorage('./.storage');
   }
-  var _storage = localStorage;
-  var _getCurrentTask = function(){
-    return _getTaskByID(_storage.getItem('.current'));
+  var storage = localStorage;
+  var getCurrentTask = function(){
+    return getTaskByID(storage.getItem('.current'));
   };
-  var _setCurrentTask = function(task){
-    _storage.setItem('.current', task.id);
+  var setCurrentTask = function(task){
+    storage.setItem('.current', task.id);
   };
-  var _getTaskByID = function(id){
-    return _storage.key(id) ? JSON.parse(_storage.getItem(id)) : null;
+  var getTaskByID = function(id){
+    return storage.key(id) ? JSON.parse(storage.getItem(id)) : null;
   }
-  var _setTaskToID = function(task, id){
-    _storage.setItem(id, JSON.stringify(task));
+  var setTaskToID = function(task, id){
+    storage.setItem(id, JSON.stringify(task));
   }
-  var _taskNameToID = function(taskName){
-    var previousKey = _storage.keys.filter(function(id){
-      var task = _getTaskByID(id);
+  var taskNameToID = function(taskName){
+    var previousKey = storage.keys.filter(function(id){
+      var task = getTaskByID(id);
       return task ? task.name===taskName : false;
     })[0];
-    return previousKey || _storage.length;
+    return previousKey || storage.length;
   }
-  var _getTaskByName = function(taskName){
-    return _getTaskByID(_taskNameToID(taskName));
+  var getTaskByName = function(taskName){
+    return getTaskByID(taskNameToID(taskName));
   };
-  var _setAttribute = function(attr, value){
-    var _current = _getCurrentTask();
+  var setAttribute = function(attr, value){
+    var current = getCurrentTask();
     if(value[0]==='[' && value[value.length-1]===']'){
       // Don't erase existing array, but create a new one if needed.
-      _current[attr] = Array.isArray(_current[attr]) ? _current[attr] : [];
+      current[attr] = Array.isArray(current[attr]) ? current[attr] : [];
       // Get the inner value of the array string, eg 'meta' from '[meta]'.
       value = value.slice(1,value.length-1);
     }
-    if(value && Array.isArray(_current[attr]) ){
-     _current[attr].push(value)
+    if(value && Array.isArray(current[attr]) ){
+     current[attr].push(value)
     } else {
-      _current[attr] = value;
+      current[attr] = value;
     }
-    _setTaskToID(_current, _current.id);
+    setTaskToID(current, current.id);
   };
 
   var addTask = function(taskName){
-    var task = _getTaskByName(taskName);
+    var task = getTaskByName(taskName);
     if(task === null){
-      var id = _taskNameToID(taskName);
+      var id = taskNameToID(taskName);
       var task = {name: taskName, id: id};
-      _setTaskToID(task, id);
+      setTaskToID(task, id);
     }
-    _setCurrentTask(task);
+    setCurrentTask(task);
     return task;
   }
 
   var getTask = function(taskNameOrID){
     if (taskNameOrID){
-      var task = isNaN(Number(taskNameOrID)) ? _getTaskByName(taskNameOrID) : _getTaskByID(taskNameOrID);
-      _setCurrentTask(task);
+      var task = isNaN(Number(taskNameOrID)) ? getTaskByName(taskNameOrID) : getTaskByID(taskNameOrID);
+      setCurrentTask(task);
     } else {
-      var task = _getCurrentTask();
+      var task = getCurrentTask();
     }
     return task;
   }
 
   var listTasks = function(){
-    return _storage.keys.filter(function(id){return !isNaN(id);}).map(function(id){ return _getTaskByID(id); });
+    return storage.keys.filter(function(id){return !isNaN(id);}).map(function(id){ return getTaskByID(id); });
   }
 
   var examineAttribute = function(attr){
-    return _getCurrentTask()[attr];
+    return getCurrentTask()[attr];
   };
 
   module.exports = {
-    add: addTask,
+    add: function(taskName){ addTask(taskName); return getCurrentTask(); },
     get: getTask,
     list: listTasks,
     examine: examineAttribute,
-    current: _getCurrentTask,
-    tag: function(tagName, id){ _setAttribute('tags', '['+tagName+']'); }
+    tag: function(tagName){ setAttribute('tags', '['+tagName+']'); return getCurrentTask(); },
+    untag: function(tagName){ setAttribute('tags', '['+tagName+']'); return getCurrentTask(); }
   };
 
 })();
