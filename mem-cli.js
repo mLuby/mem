@@ -23,7 +23,8 @@
     'edit': function(attrValuePair){
       var attr = attrValuePair.split(':')[0];
       var value = attrValuePair.split(':')[1];
-      displayTask(mem.edit(attr, value)); }
+      displayTask(mem.edit(attr, value)); },
+    'sync': function(arg){ mem.sync(arg); }
   }
 
   var doCommand = function(parameters){
@@ -90,6 +91,7 @@
       +style.mem(' mem ')+style.cmd('untag ')+style.arg('tagName\n')
       +style.mem(' mem ')+style.cmd('find ')+style.arg('\'search string\'\n')
       +style.mem(' mem ')+style.cmd('remove ')+style.arg('current\n')
+      +style.mem(' mem ')+style.cmd('sync ')+style.arg('cloud\n')
     );
   };
 

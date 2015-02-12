@@ -5,12 +5,16 @@
     var LocalStorage = require('node-localstorage').LocalStorage;
     var localStorage = new LocalStorage('./.storage');
   }
+  // Initialize cloud storage.
+  var Firebaseio = require("firebase");
+  var firebase = new Firebaseio("https://mem-storage.firebaseio.com/");
+
   var storage = localStorage;
   var getCurrentTask = function(){
-    return getTaskByID(storage.getItem('.current'));
+    return getTaskByID(storage.getItem('current'));
   };
   var setCurrentTask = function(task){
-    storage.setItem('.current', task.id);
+    storage.setItem('current', task.id);
   };
   var getTaskByID = function(id){
     return storage.getItem(id) ? JSON.parse(storage.getItem(id)) : null;
@@ -131,6 +135,19 @@
     }
   };
 
+  var syncCloudAndLocalStorage = function(syncTarget){
+    if( syncTarget === 'cloud' ){
+      var localData = localStorage.keys.reduce(function(obj, key){
+        obj[key] = isNaN(Number(key)) ? localStorage.getItem(key) : getTaskByID(key);
+        return obj;
+      }, {});
+      firebase.set(localData);
+      console.log('Sync succeeded.');
+    } else {
+      console.log('Sync failed.');
+    }
+  };
+
   module.exports = {
     add: function(taskName){ addTask(taskName); return getCurrentTask(); },
     get: getTask,
@@ -140,7 +157,8 @@
     untag: function(tagName){ removeFromArray('tags', tagName); return getCurrentTask(); },
     find: findTask,
     edit: function(attr, value){ setAttribute(attr, value); return getCurrentTask(); },
-    remove: function(taskNameOrID){ return removeTask(taskNameOrID); }
+    remove: function(taskNameOrID){ return removeTask(taskNameOrID); },
+    sync: syncCloudAndLocalStorage
   };
 
 })();

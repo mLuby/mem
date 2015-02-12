@@ -18,6 +18,7 @@
   "homepage": "https://github.com/mLuby/Memory",
   "dependencies": {
     "chalk": "^0.5.1",
+    "firebase": "^2.1.2",
     "node-localstorage": "^0.3.6"
   }
 }
