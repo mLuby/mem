@@ -37,10 +37,11 @@
       var command = process.argv[2];
       var args = process.argv.slice(3);
     }
-
+    console.warn('cmd:',command,'args:',args);
     if( switchObj.hasOwnProperty(command) ){
       // assuming 1 arg per command
       switchObj[command](args.shift());
+      console.warn('recursion?', args.length);
       // allows chaining commands
       if(args.length > 0){
         doCommand(args);
