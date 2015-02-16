@@ -24,7 +24,8 @@
       var attr = attrValuePair.split(':')[0];
       var value = attrValuePair.split(':')[1];
       displayTask(mem.edit(attr, value)); },
-    'sync': function(arg){ mem.sync(arg); }
+    'sync': function(arg){ mem.sync(arg); },
+    'test': function(){ console.log('testing args|'+JSON.stringify(arguments)+'|'); }
   }
 
   var doCommand = function(parameters){
@@ -37,11 +38,9 @@
       var command = process.argv[2];
       var args = process.argv.slice(3);
     }
-    console.warn('cmd:',command,'args:',args);
     if( switchObj.hasOwnProperty(command) ){
       // assuming 1 arg per command
       switchObj[command](args.shift());
-      console.warn('recursion?', args.length);
       // allows chaining commands
       if(args.length > 0){
         doCommand(args);
@@ -97,4 +96,5 @@
   };
 
   doCommand();
+  process.exit(0);
 })();
