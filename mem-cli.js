@@ -24,8 +24,7 @@
       var attr = attrValuePair.split(':')[0];
       var value = attrValuePair.split(':')[1];
       displayTask(mem.edit(attr, value)); },
-    'sync': function(arg){ mem.sync(arg); },
-    'test': function(){ console.log('testing args|'+JSON.stringify(arguments)+'|'); }
+    'sync': function(arg){ mem.sync(arg); }
   }
 
   var doCommand = function(parameters){
@@ -96,5 +95,4 @@
   };
 
   doCommand();
-  process.exit(0);
 })();

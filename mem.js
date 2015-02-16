@@ -5,9 +5,6 @@
     var LocalStorage = require('node-localstorage').LocalStorage;
     var localStorage = new LocalStorage('./.storage');
   }
-  // Initialize cloud storage.
-  var Firebaseio = require("firebase");
-  var firebase = new Firebaseio("https://mem-storage.firebaseio.com/");
 
   var storage = localStorage;
   var getCurrentTask = function(){
@@ -136,6 +133,10 @@
   };
 
   var syncCloudAndLocalStorage = function(syncTarget){
+    // Initialize cloud storage (note Firebase will not auto-terminate)
+    var Firebaseio = require("firebase");
+    var firebase = new Firebaseio("https://mem-storage.firebaseio.com/");
+
     if( syncTarget === 'cloud' ){
       var localData = localStorage.keys.reduce(function(obj, key){
         obj[key] = isNaN(Number(key)) ? localStorage.getItem(key) : getTaskByID(key);
@@ -146,6 +147,9 @@
     } else {
       console.log('Sync failed.');
     }
+    // Kills open Firebase connection;
+    // Consider using REST API instead
+    process.exit(0);
   };
 
   module.exports = {
