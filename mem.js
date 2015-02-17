@@ -110,7 +110,14 @@
   };
 
   var listTasks = function(){
-    return storage.keys.filter(function(id){return !isNaN(id);}).map(function(id){ return getTaskByID(id); });
+    return storage.keys
+      .filter(function(id){
+        // filter out non-numeric ids
+        return !isNaN(id); })
+      .sort(function(id1, id2){
+        return id1 - id2; })
+      .map(function(id){
+        return getTaskByID(id); });
   };
 
   var examineAttribute = function(attr){
