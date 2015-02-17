@@ -7,17 +7,17 @@ minimal UI, maximal helpfulness
 2. Cd into the clone: `cd mem/node`
 3. Install dependencies: `$ npm install`
 4. Configure your bash profile:
-    
+
     ```bash
-$ echo "mem() { 
-      cd $(pwd); 
-      node mem-cli.js "\"\$@\""; 
-      cd - > /dev/null; 
-}" >> ~/.bash_profile 
+$ echo "mem() {
+      cd $(pwd);
+      node mem-cli.js "\"\$@\"";
+      cd - > /dev/null;
+}" >> ~/.bash_profile
     ```
-    
+
 5. Restart terminal.
-6. Run `$ mem help` to see available commands. 
+6. Run `$ mem help` to see available commands.
 
 ###Use
 Typical use will start with `$ mem add 'my first task'`. From there you can:
@@ -43,3 +43,15 @@ What mem doesn't do:
 ###Contribute
 - Open [issues](https://github.com/mLuby/mem/issues), both bugs and feature requests.
 - [Pull request](https://github.com/mLuby/mem/pulls) code you've fixed, improved, or added.
+
+###Architecture
+global npm module
+  - CLI
+  - local storage
+  - commands
+    - add
+    - get
+    - show
+    - tag
+  - helpers
+  - cloud sync
