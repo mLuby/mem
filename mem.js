@@ -124,27 +124,22 @@
     return getCurrentTask()[attr];
   };
 
-  var findTask = function(searchString){
+  var showTasks = function(searchString){
+    var isNegated = searchString[0]==='^';
+    if( isNegated ){ searchString = searchString.slice(1); }
     return listTasks().filter(function(task){
       for(var key in task){
+        // for each task obj, look at each key/value pair
+        // if not negating, only need one match to return true.
+        // if negating, must be no matches to return true.
         var value = task[key];
-        if( typeof value === 'number' ){
-          // Intentionally using fuzzy equality.
-          if( value == searchString ){
-            return true;
-          }
-        } else if( typeof value === 'string' ){
-          if( value.indexOf( searchString )>=0 ){
-            return true;
-          }
-        } else if( Array.isArray(value) ){
-          if( value.indexOf( searchString )>=0 ){
-            return true;
-          }
-        } else {
-          return false;
+        if( typeof value === 'string' && value.indexOf(searchString) > -1 ){
+          return !isNegated;
+        } else if ( Array.isArray(value) && value.indexOf(searchString) > -1 ){
+          return !isNegated;
         }
       }
+      return isNegated;
     });
   };
 
@@ -184,7 +179,7 @@
     examine: examineAttribute,
     tag: function(tagName){ setAttribute('tags', '['+tagName+']'); return getCurrentTask(); },
     untag: function(tagName){ removeFromArray('tags', tagName); return getCurrentTask(); },
-    find: findTask,
+    show: showTasks,
     edit: function(attr, value){ setAttribute(attr, value); return getCurrentTask(); },
     remove: function(taskNameOrID){ return removeTask(taskNameOrID); },
     sync: syncCloudAndLocalStorage

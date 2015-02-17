@@ -5,7 +5,8 @@
   var style = {
     mem: chalk.grey.dim,
     cmd: chalk.yellow,
-    arg: chalk.cyan
+    arg: chalk.cyan,
+    fixedArg: chalk.magenta
   }
   var switchObj = {
     'add': function(taskName){ displayTask(mem.add(taskName)); },
@@ -17,7 +18,7 @@
     'tag':  function(tagName){ displayTask(mem.tag(tagName)); },
     'untag':  function(tagName){ displayTask(mem.untag(tagName)); },
     'examine': function(attr){ console.log(attr+': '+mem.examine(attr)); },
-    'find': function(searchString){ mem.find(arguments[0]).forEach(function(task){
+    'show': function(searchString){ mem.show(arguments[0]).forEach(function(task){
                                 displayTask(task);
                               }); },
     'edit': function(attrValuePair){
@@ -83,14 +84,14 @@
   var showHelp = function(){
     console.log(' '+chalk.underline('Commands:\n')
       +style.mem(' mem ')+style.cmd('add ')+style.arg('\'task name\'\n')
-      +style.mem(' mem ')+style.cmd('get ')+style.arg('[id|\'task name\']\n')
+      +style.mem(' mem ')+style.cmd('get ')+style.arg('id|\'task name\'\n')
       +style.mem(' mem ')+style.cmd('examine ')+style.arg('property\n')
       +style.mem(' mem ')+style.cmd('list\n')
       +style.mem(' mem ')+style.cmd('tag ')+style.arg('tagName\n')
       +style.mem(' mem ')+style.cmd('untag ')+style.arg('tagName\n')
-      +style.mem(' mem ')+style.cmd('find ')+style.arg('\'search string\'\n')
-      +style.mem(' mem ')+style.cmd('delete ')+style.arg('current\n')
-      +style.mem(' mem ')+style.cmd('sync ')+style.arg('cloud\n')
+      +style.mem(' mem ')+style.cmd('show ')+style.arg('regex\n')
+      +style.mem(' mem ')+style.cmd('delete ')+style.fixedArg('\'current\'\n')
+      +style.mem(' mem ')+style.cmd('sync ')+style.fixedArg('\'cloud\'\n')
     );
   };
 
