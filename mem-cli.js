@@ -9,7 +9,7 @@
   }
   var switchObj = {
     'add': function(taskName){ displayTask(mem.add(taskName)); },
-    'remove': function(taskName){ displayTask(mem.remove(taskName)); },
+    'delete': function(taskName){ displayTask(mem.remove(taskName)); },
     'get': function(taskNameOrID){ displayTask(mem.get(taskNameOrID)); },
     'list': function(){ mem.list().forEach(function(task){
                           displayTask(task);
@@ -89,7 +89,7 @@
       +style.mem(' mem ')+style.cmd('tag ')+style.arg('tagName\n')
       +style.mem(' mem ')+style.cmd('untag ')+style.arg('tagName\n')
       +style.mem(' mem ')+style.cmd('find ')+style.arg('\'search string\'\n')
-      +style.mem(' mem ')+style.cmd('remove ')+style.arg('current\n')
+      +style.mem(' mem ')+style.cmd('delete ')+style.arg('current\n')
       +style.mem(' mem ')+style.cmd('sync ')+style.arg('cloud\n')
     );
   };
