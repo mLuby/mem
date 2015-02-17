@@ -1,35 +1,49 @@
 (function(){
   'use strict';
+
   // Initialize localStorage.
   if (typeof localStorage === "undefined" || localStorage === null) {
     var LocalStorage = require('node-localstorage').LocalStorage;
     var localStorage = new LocalStorage('./.storage');
   }
+  var storage = localStorage;
+
   var Firebaseio = require("firebase");
 
-  var storage = localStorage;
   var getCurrentTask = function(){
     return getTaskByID(storage.getItem('current'));
   };
+
   var setCurrentTask = function(task){
     storage.setItem('current', task.id);
   };
+
   var getTaskByID = function(id){
     return storage.getItem(id) ? JSON.parse(storage.getItem(id)) : null;
   }
+
   var setTaskToID = function(task, id){
     storage.setItem(id, JSON.stringify(task));
   }
+
   var taskNameToID = function(taskName){
-    var previousKey = storage.keys.filter(function(id){
+    var emptyID;
+    var taskCount = storage.length;
+    for(var id = 0; id < taskCount; id++){
       var task = getTaskByID(id);
-      return task ? task.name===taskName : false;
-    })[0];
-    return previousKey || storage.length;
-  }
+      if(!task){
+        emptyID = id;
+      } else if (task.name === taskName){
+        return task.id;
+      }
+    }
+    return emptyID || taskCount;
+  };
+
   var getTaskByName = function(taskName){
     return getTaskByID(taskNameToID(taskName));
   };
+
   var setAttribute = function(attr, value){
     var current = getCurrentTask();
     if(value[0]==='[' && value[value.length-1]===']'){
@@ -69,18 +83,21 @@
     var array = current[attr];
     array.splice(array.indexOf(value), 1);
     setTaskToID(current, current.id);
-  }
+  };
+
+  var test = function(){
+  };
 
   var addTask = function(taskName){
     var task = getTaskByName(taskName);
-    if(task === null){
+    if(!task){
       var id = taskNameToID(taskName);
       var task = {name: taskName, id: id};
       setTaskToID(task, id);
     }
     setCurrentTask(task);
     return task;
-  }
+  };
 
   var getTask = function(taskNameOrID){
     if (taskNameOrID){
@@ -90,11 +107,11 @@
       var task = getCurrentTask();
     }
     return task;
-  }
+  };
 
   var listTasks = function(){
     return storage.keys.filter(function(id){return !isNaN(id);}).map(function(id){ return getTaskByID(id); });
-  }
+  };
 
   var examineAttribute = function(attr){
     return getCurrentTask()[attr];
@@ -122,7 +139,7 @@
         }
       }
     });
-  }
+  };
 
   var removeTask = function(taskNameOrID){
     if( taskNameOrID === 'current' ){
@@ -134,24 +151,23 @@
   };
 
   var syncCloudAndLocalStorage = function(syncTarget){
-    // Initialize cloud storage (note Firebase will not auto-terminate)
-
     if( syncTarget === 'cloud' ){
       var localData = localStorage.keys.reduce(function(obj, key){
         obj[key] = isNaN(Number(key)) ? localStorage.getItem(key) : getTaskByID(key);
         return obj;
       }, {});
       console.log('Syncing...');
+      // Initialize cloud storage (note Firebase will not auto-terminate)
       var firebase = new Firebaseio("https://mem-storage.firebaseio.com/");
       firebase.set(localData, function(){
         console.log('Sync succeeded.');
+        // Kills open Firebase connection;
+        // Consider using REST API instead
         process.exit(0);
       });
     } else {
       console.log('Sync failed.');
     }
-    // Kills open Firebase connection;
-    // Consider using REST API instead
   };
 
   module.exports = {
