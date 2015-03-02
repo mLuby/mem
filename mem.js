@@ -125,22 +125,28 @@
   };
 
   var showTasks = function(searchString){
-    var isNegated = searchString[0]==='^';
-    if( isNegated ){ searchString = searchString.slice(1); }
-    return listTasks().filter(function(task){
-      for(var key in task){
-        // for each task obj, look at each key/value pair
-        // if not negating, only need one match to return true.
-        // if negating, must be no matches to return true.
-        var value = task[key];
-        if( typeof value === 'string' && value.indexOf(searchString) > -1 ){
-          return !isNegated;
-        } else if ( Array.isArray(value) && value.indexOf(searchString) > -1 ){
-          return !isNegated;
+    var allTasks = listTasks()
+    if( !searchString ){
+      return allTasks;
+    }
+    else {
+      var isNegated = searchString[0]==='^';
+      if( isNegated ){ searchString = searchString.slice(1); }
+      return allTasks.filter(function(task){
+        for(var key in task){
+          // for each task obj, look at each key/value pair
+          // if not negating, only need one match to return true.
+          // if negating, must be no matches to return true.
+          var value = task[key];
+          if( typeof value === 'string' && value.indexOf(searchString) > -1 ){
+            return !isNegated;
+          } else if ( Array.isArray(value) && value.indexOf(searchString) > -1 ){
+            return !isNegated;
+          }
         }
-      }
-      return isNegated;
-    });
+        return isNegated;
+      });
+    }
   };
 
   var removeTask = function(taskNameOrID){
@@ -182,7 +188,8 @@
     show: showTasks,
     edit: function(attr, value){ setAttribute(attr, value); return getCurrentTask(); },
     remove: function(taskNameOrID){ return removeTask(taskNameOrID); },
-    sync: syncCloudAndLocalStorage
+    sync: syncCloudAndLocalStorage,
+    test: test
   };
 
 })();
