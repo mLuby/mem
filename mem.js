@@ -178,6 +178,8 @@
     }
   };
 
+  var blocks = function (){};
+
   module.exports = {
     add: function(taskName){ addTask(taskName); return getCurrentTask(); },
     get: getTask,
@@ -189,6 +191,7 @@
     edit: function(attr, value){ setAttribute(attr, value); return getCurrentTask(); },
     remove: function(taskNameOrID){ return removeTask(taskNameOrID); },
     sync: syncCloudAndLocalStorage,
+    blocks: blocks,
     test: test
   };
 
