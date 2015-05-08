@@ -1,11 +1,12 @@
 {
-  "name": "Memory",
-  "version": "0.1.0",
-  "description": "Node only version of Memory",
-  "main": "Memory.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "mem",
+  "version": "1.0.0",
+  "description": "the task CLI",
+  "bin": {
+      "mem": "mem-cli.js"
   },
+  "main": "mem.js",
+  "preferGlobal": "true",
   "repository": {
     "type": "git",
     "url": "https://github.com/mLuby/Memory"
@@ -13,9 +14,9 @@
   "author": "Mike Luby <Michael@mLuby.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mLuby/Memory/issues"
+    "url": "https://github.com/mLuby/mem/issues"
   },
-  "homepage": "https://github.com/mLuby/Memory",
+  "homepage": "https://github.com/mLuby/mem",
   "dependencies": {
     "chalk": "^0.5.1",
     "firebase": "^2.1.2",
