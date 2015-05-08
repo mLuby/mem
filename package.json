@@ -1,9 +1,9 @@
 {
-  "name": "mem",
+  "name": "mem2",
   "version": "1.0.0",
-  "description": "the task CLI",
+  "description": "mem is a task CLI",
   "bin": {
-      "mem": "mem-cli.js"
+    "mem": "mem-cli.js"
   },
   "main": "mem.js",
   "preferGlobal": "true",
