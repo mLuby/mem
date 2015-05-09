@@ -3,13 +3,7 @@
 (function(){
   'use strict';
   var mem = require('./mem.js');
-  var chalk = require('chalk');
-  var style = {
-    mem: chalk.grey.dim,
-    cmd: chalk.yellow,
-    arg: chalk.cyan,
-    fixedArg: chalk.magenta
-  }
+  var style = require('./config.js').styles
   var switchObj = {
     'add': function(taskName){ displayTask(mem.add(taskName)); },
     'delete': function(taskName){ displayTask(mem.remove(taskName)); },
@@ -28,7 +22,8 @@
       var value = attrValuePair.split(':')[1];
       displayTask(mem.edit(attr, value)); },
     'sync': function(arg){ mem.sync(arg); },
-    'test': function(){ mem.test(); }
+    'test': function(){ mem.test(); },
+    'config': function(){ mem.config(); }
   }
 
   var doCommand = function(parameters){
@@ -54,38 +49,23 @@
   }
 
   var displayTask = function(task){
-    // Text console.log formatting: https://github.com/sindresorhus/chalk/blob/master/readme.md
-    var format = {
-      'id': chalk.red,
-      'name': chalk.white,
-      'tags': {
-        'default': chalk.bgYellow.black,
-        'done': chalk.inverse,
-        'meta': chalk.bgBlue.grey,
-        'v2': chalk.bgGreen.black,
-        'bug': chalk.bgRed.black,
-        'housing': chalk.bgRed.black
-      },
-      'incomplete': chalk.green,
-      'complete': function(){ return chalk.grey.dim(chalk.stripColor.apply(null, arguments));},
-      'other': chalk.grey
-    };
-    var taskString = ' '+format.id(task.id)+format.other(': ')+format.name(task.name);
-    var status = format.incomplete;
+    var taskString = ' '+style.id(task.id)+style.other(': ')+style.name(task.name);
+    var status = style.incomplete;
     if(task.tags){
-      status = task.tags.indexOf('done') > -1 ? format.complete : format.incomplete;
+      status = task.tags.indexOf('done') > -1 ? style.complete : style.incomplete;
       var tagsString = task.tags.reduce(function(sum, item){
-        var color = format.tags.hasOwnProperty(item) ? format.tags[item] :format.tags.default
+        var color = style.tags.hasOwnProperty(item) ? style.tags[item] :style.tags.default
         return (sum.length>0?sum+' ':sum) + color(item);
       }, '');
-      taskString += format.other(' ')+tagsString;
+      taskString += style.other(' ')+tagsString;
     }
     taskString = status(taskString);
     console.log(taskString);
   };
 
   var showHelp = function(){
-    console.log(' '+chalk.underline('Commands:\n')
+    console.log(' '+style.underline('Commands:\n')
+      +style.mem(' installed in /usr/local/lib/node_modules/mem2/\n')
       +style.mem(' mem ')+style.cmd('add ')+style.arg('\'task name\'\n')
       +style.mem(' mem ')+style.cmd('get ')+style.arg('id|\'task name\'\n')
       +style.mem(' mem ')+style.cmd('examine ')+style.arg('property\n')
@@ -95,6 +75,7 @@
       +style.mem(' mem ')+style.cmd('show ')+style.arg('regex\n')
       +style.mem(' mem ')+style.cmd('delete ')+style.fixedArg('\'current\'\n')
       +style.mem(' mem ')+style.cmd('sync ')+style.fixedArg('\'cloud\'\n')
+      +style.mem(' mem ')+style.cmd('config')
     );
   };
 
