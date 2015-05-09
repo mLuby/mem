@@ -2,9 +2,13 @@
   'use strict';
 
   // Initialize localStorage.
+  // require('child_process').exec('echo $(npm config get prefix)', function(path){
+  //   console.log('path', arguments[1].slice(0,-1)+'/lib/node_modules/mem2');
+  // });
+  var config = require('./config.js');
   if (typeof localStorage === "undefined" || localStorage === null) {
     var LocalStorage = require('node-localstorage').LocalStorage;
-    var localStorage = new LocalStorage('./.storage');
+    var localStorage = new LocalStorage(config.installPath+'.storage');
   }
   var storage = localStorage;
 
@@ -178,6 +182,10 @@
     }
   };
 
+  var editConfig = function(){
+    require('child_process').exec('open '+config.installPath+'config.js'); //cb async
+  };
+
   var blocks = function (){};
 
   module.exports = {
@@ -192,7 +200,8 @@
     remove: function(taskNameOrID){ return removeTask(taskNameOrID); },
     sync: syncCloudAndLocalStorage,
     blocks: blocks,
-    test: test
+    test: test,
+    config: editConfig
   };
 
 })();
