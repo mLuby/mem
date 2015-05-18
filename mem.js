@@ -186,7 +186,16 @@
     require('child_process').exec('open '+config.installPath+'config.js'); //cb async
   };
 
-  var blocks = function (){};
+  var swap = function(swapId){
+    var currentTask = getCurrentTask();
+    var swapTask = getTaskByID(swapId);
+    swapTask.id = currentTask.id;
+    setTaskToID(swapTask, currentTask.id);
+    currentTask.id = swapId;
+    setTaskToID(currentTask, swapId);
+    setCurrentTask(currentTask);
+    return currentTask;
+  };
 
   module.exports = {
     add: function(taskName){ addTask(taskName); return getCurrentTask(); },
@@ -199,9 +208,8 @@
     edit: function(attr, value){ setAttribute(attr, value); return getCurrentTask(); },
     remove: function(taskNameOrID){ return removeTask(taskNameOrID); },
     sync: syncCloudAndLocalStorage,
-    blocks: blocks,
-    test: test,
-    config: editConfig
+    config: editConfig,
+    swap: swap
   };
 
 })();

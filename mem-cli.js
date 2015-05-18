@@ -22,8 +22,8 @@
       var value = attrValuePair.split(':')[1];
       displayTask(mem.edit(attr, value)); },
     'sync': function(arg){ mem.sync(arg); },
-    'test': function(){ mem.test(); },
-    'config': function(){ mem.config(); }
+    'config': function(){ mem.config(); },
+    'swap': function(id){ mem.swap(id); }
   }
 
   var doCommand = function(parameters){
@@ -75,7 +75,8 @@
       +style.mem(' mem ')+style.cmd('show ')+style.arg('regex\n')
       +style.mem(' mem ')+style.cmd('delete ')+style.fixedArg('\'current\'\n')
       +style.mem(' mem ')+style.cmd('sync ')+style.fixedArg('\'cloud\'\n')
-      +style.mem(' mem ')+style.cmd('config')
+      +style.mem(' mem ')+style.cmd('config\n')
+      +style.mem(' mem ')+style.cmd('swap ')+style.arg('id')
     );
   };
 
