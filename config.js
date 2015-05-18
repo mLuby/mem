@@ -24,6 +24,7 @@
       other: chalk.grey,
       underline: chalk.underline
     },
-    installPath: '/usr/local/lib/node_modules/mem2/' 
+    installPath: '/usr/local/lib/node_modules/mem2/',
+    storagePath: '~/'
   };
 })();
