@@ -23,7 +23,8 @@
       displayTask(mem.edit(attr, value)); },
     'sync': function(arg){ mem.sync(arg); },
     'config': function(){ mem.config(); },
-    'swap': function(id){ mem.swap(id); }
+    'swap': function(id){ mem.swap(id); },
+    'link': function(url){ mem.edit('link', url); }
   }
 
   var doCommand = function(parameters){
@@ -59,6 +60,9 @@
       }, '');
       taskString += style.other(' ')+tagsString;
     }
+    if(task.link){
+      taskString += ' '+style.link(task.link);
+    }
     taskString = status(taskString);
     console.log(taskString);
   };
@@ -76,7 +80,8 @@
       +style.mem(' mem ')+style.cmd('delete ')+style.fixedArg('\'current\'\n')
       +style.mem(' mem ')+style.cmd('sync ')+style.fixedArg('\'cloud\'\n')
       +style.mem(' mem ')+style.cmd('config\n')
-      +style.mem(' mem ')+style.cmd('swap ')+style.arg('id')
+      +style.mem(' mem ')+style.cmd('swap ')+style.arg('id\n')
+      +style.mem(' mem ')+style.cmd('link ')+style.arg('URL')
     );
   };
 

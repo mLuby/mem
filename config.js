@@ -22,7 +22,8 @@
       incomplete: chalk.green,
       complete: function(){ return chalk.grey.dim(chalk.stripColor.apply(null, arguments));},
       other: chalk.grey,
-      underline: chalk.underline
+      underline: chalk.underline,
+      link: chalk.green
     },
     installPath: '/usr/local/lib/node_modules/mem2/',
     storagePath: '~/'
