@@ -26,6 +26,6 @@
       link: chalk.green
     },
     installPath: '/usr/local/lib/node_modules/mem2/',
-    storagePath: '~/'
+    storagePath: '/usr/local/lib/mem-tasks'
   };
 })();

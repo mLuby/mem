@@ -8,7 +8,7 @@
   var config = require('./config.js');
   if (typeof localStorage === "undefined" || localStorage === null) {
     var LocalStorage = require('node-localstorage').LocalStorage;
-    var localStorage = new LocalStorage(config.storagePath+'.storage');
+    var localStorage = new LocalStorage(config.storagePath);
   }
   var storage = localStorage;
 
