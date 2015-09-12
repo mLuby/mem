@@ -22,13 +22,13 @@ $ echo "mem() {
 ###Use
 Typical use will start with `$ mem add 'my first task'`. From there you can:
 - `$ mem list`
-- `$ mem get` [task# or 'taskName' or blank will return current task]
-- `$ mem tag` ['tagName']
-- `$ mem untag` ['tagName']
+- `$ mem add` 'taskName'
+- `$ mem delete` index (from mem list)
+- `$ mem connect` 'userKey'
 - `$ mem examine` [property, eg 'tags']
 
 ###Design:
-What mem does:
+What mem does (or will do):
 - ease of use
 - task dependencies
 - Gantt process
@@ -47,11 +47,9 @@ What mem doesn't do:
 ###Architecture
 global npm module
   - CLI
-  - local storage
   - commands
     - add
-    - get
-    - show
-    - tag
-  - helpers
-  - cloud sync
+    - list
+    - help
+    - etc…
+  - config
