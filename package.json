@@ -19,6 +19,7 @@
   "homepage": "https://github.com/mLuby/mem",
   "dependencies": {
     "firebase": "^2.2.9",
-    "hat": "0.0.3"
+    "hat": "0.0.3",
+    "moment": "^2.10.6"
   }
 }

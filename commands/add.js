@@ -9,7 +9,9 @@ var hat = require('hat')
 function add (tasks, taskName) {
   var timestamp = new Date()
   task = {
-    name: taskName
+    name: taskName,
+    createdAt: timestamp,
+    updatedAt: timestamp
   }
   tasks[hat()] = task
   return tasks
