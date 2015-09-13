@@ -1,31 +1,16 @@
 module.exports = {
   help: 'Add a task.',
   example: 'mem add "Do laundry"',
-  command: command
+  command: add
 }
 
-var connection = require('./connect.js').connect()
+var hat = require('hat')
 
-function command (taskName) {
-  // connect to db
-  // add task
+function add (tasks, taskName) {
   var timestamp = new Date()
   task = {
-    name: taskName,
-    createdAt: timestamp,
-    updatedAt: timestamp
+    name: taskName
   }
-
-  // use numberic id
-  // var taskCount;
-  // tasks.once("value", function(data) {
-  //   taskCount = Object.keys(data.val()).length
-  //   console.log("tasks length", taskCount)
-  //   var taskRef = tasks.child(taskCount)
-  //   taskRef.update(task, end)
-  // });
-
-  connection.tasksRef().push(task, connection.end) // doesn't add createdAt, updatedAt
+  tasks[hat()] = task
+  return tasks
 }
-
-// require('./commands/add.js').command('testing')

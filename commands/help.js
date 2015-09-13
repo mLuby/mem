@@ -8,7 +8,7 @@ var fs = require('fs')
 
 // get list of files in commands directory
 // for each file, require it and get help text
-function command (commandName) {
+function command (tasks, commandName) {
   var commandNames = []
   if(commandName){
     commandNames.push(commandName)
@@ -16,6 +16,8 @@ function command (commandName) {
     commandNames = fs.readdirSync('./commands').filter(onlyJsFiles)
   }
   commandNames.forEach(printHelpForCommand)
+  console.log('') // new line for UI separation
+  return tasks
 }
 
 function onlyJsFiles (fileName) { return ~fileName.indexOf('.js') }
@@ -23,5 +25,3 @@ function onlyJsFiles (fileName) { return ~fileName.indexOf('.js') }
 function printHelpForCommand (commandName) {
   console.log(commandName.replace('.js',''), require('./'+commandName).help)
 }
-
-// require('./commands/help.js').command()

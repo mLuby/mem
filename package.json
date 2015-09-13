@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mLuby/mem",
   "dependencies": {
-    "firebase": "^2.2.9"
+    "firebase": "^2.2.9",
+    "hat": "0.0.3"
   }
 }

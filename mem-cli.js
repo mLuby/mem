@@ -2,25 +2,36 @@ var path = require('path')
 var fs = require('fs')
 
 var commands = loadCommands('./commands')
-executeCommand()
+var connection = require('./commands/connect.js').connect()
 
-function executeCommand (parameters) {
-  if(parameters){
-    var command = parameters[0]
-    var args = parameters.slice(1)
-  } else {
-    var command = process.argv[2]
-    var args = process.argv.slice(3)
+// get tasks from firebase and parse params
+connection.tasksRef().once('value', function(data) {
+  // get tasks
+  var tasks = data.val() || {}
+  // execute commands
+  var resultingTasks = executeCommand(tasks, process.argv.slice(2))
+  // merge changes
+  for (var id in resultingTasks) {
+    tasks[id] = resultingTasks[id]
   }
-  if( commands.hasOwnProperty(command) ){
-    // assuming 1 arg per command
-    commands[command](args.shift())
-    // allows chaining commands
-    if(args.length > 0){
-      executeCommand(args)
-    }
+  // overwrite tasks
+  connection.tasksRef().set(tasks, connection.end)
+})
+
+function executeCommand (tasks, params) {
+  if (params.length === 0) {
+    commands.help()
   } else {
-    commands['help']()
+    var command = commands[params[0]]
+    var args = [tasks]
+    Array.prototype.push.apply(args, params.slice(1, command.length))
+    var remainingParams = params.slice(command.length)
+    var resultingTasks = command.apply(null, args)
+    if (remainingParams.length) {
+      return executeCommand(resultingTasks, remainingParams)
+    } else {
+      return resultingTasks
+    }
   }
 }
 
