@@ -9,7 +9,7 @@ var moment = require('moment')
 function show (tasks) {
   for (var id in tasks) {
     var t = tasks[id]
-    console.log(id.slice(0,6)+':'+displayStatus(t.status)+displayName(t.name)+displayTime(t.due))
+    console.log(id.slice(0,6)+':'+displayStatus(t.status)+displayName(t.name)+displayTime(t.due)+displayTags(t.tags))
   }
   console.log('') // new line for UI separation
   return tasks
@@ -35,6 +35,14 @@ function displayTime (timestamp) {
     } else {
       return ' due:'+moment(timestamp).fromNow()
     }
+  } else {
+    return ''
+  }
+}
+
+function displayTags (tags) {
+  if (tags && typeof tags === 'object') {
+    return ' tags:'+Object.keys(tags)
   } else {
     return ''
   }

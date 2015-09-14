@@ -15,7 +15,11 @@ connection.tasksRef().once('value', function(data) {
     tasks[id] = resultingTasks[id]
   }
   // overwrite tasks
-  connection.tasksRef().set(tasks, connection.end)
+  if (!tasks || !Object.keys(tasks).length) {
+    console.log('Error–was going to erase tasks with:', tasks)
+  } else {
+    connection.tasksRef().set(tasks, connection.end)
+  }
 })
 
 function executeCommand (tasks, params) {
@@ -28,7 +32,7 @@ function executeCommand (tasks, params) {
     Array.prototype.push.apply(args, params.slice(1, command.length))
     var remainingParams = params.slice(command.length)
     var resultingTasks = command.apply(null, args)
-    if (~['show', 'examine'].indexOf(commandName)) {
+    if (commandName !== 'show' && commandName !== 'examine') {
       commands.show(resultingTasks) // show results after every command
     }
     if (remainingParams.length) {
