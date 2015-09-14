@@ -6,7 +6,7 @@ module.exports = {
   end: end
 }
 
-var config = require('../config.js')
+var config = require('../config/config.js')
 
 function command (userKey) {
   var db = config.get('db')
@@ -17,7 +17,6 @@ function command (userKey) {
 
 function connect () {
   var Firebase = require('firebase')
-  var config = require('../config.js')
   var connection = new Firebase('https://mem-storage.firebaseio.com/users/'+config.get('db').userKey)
   module.exports.tasksRef = connection.child('tasks')
   return {

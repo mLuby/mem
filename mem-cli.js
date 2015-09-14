@@ -22,11 +22,15 @@ function executeCommand (tasks, params) {
   if (params.length === 0) {
     commands.help()
   } else {
-    var command = commands[params[0]]
+    var commandName = params[0]
+    var command = commands[commandName]
     var args = [tasks]
     Array.prototype.push.apply(args, params.slice(1, command.length))
     var remainingParams = params.slice(command.length)
     var resultingTasks = command.apply(null, args)
+    if (~['show', 'examine'].indexOf(commandName)) {
+      commands.show(resultingTasks) // show results after every command
+    }
     if (remainingParams.length) {
       return executeCommand(resultingTasks, remainingParams)
     } else {

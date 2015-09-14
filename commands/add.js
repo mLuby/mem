@@ -11,8 +11,10 @@ function add (tasks, taskName) {
   task = {
     name: taskName,
     createdAt: timestamp,
-    updatedAt: timestamp
+    updatedAt: timestamp,
+    status: 'incomplete'
   }
+  tasks = {}
   tasks[hat()] = task
   return tasks
 }

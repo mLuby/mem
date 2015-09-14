@@ -33,7 +33,6 @@ function parseRelativeTime(due) {
     .replace(/thursday/i, moment().weekday(4+weekOffset).format('YYYY-MM-DD'))
     .replace(/friday/i, moment().weekday(5+weekOffset).format('YYYY-MM-DD'))
     .replace(/saturday/i, moment().weekday(6+weekOffset).format('YYYY-MM-DD'))
-    console.log('parsed', parsed)
   return moment(parsed, ['YYYY-MM-DD HH:mm', 'YYYY-MM-DD hh:mm a', 'YYYY-MM-DD hh a', 'HH:mm', 'hh:mm a', 'YYYY-MM-DD'])
 }
 
