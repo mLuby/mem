@@ -32,7 +32,7 @@ function executeCommand (tasks, params) {
     Array.prototype.push.apply(args, params.slice(1, command.length))
     var remainingParams = params.slice(command.length)
     var resultingTasks = command.apply(null, args)
-    if (commandName !== 'show' && commandName !== 'examine') {
+    if (commandName !== 'show' && commandName !== 'examine' && commandName !== 'delete') {
       commands.show(resultingTasks) // show results after every command
     }
     if (remainingParams.length) {

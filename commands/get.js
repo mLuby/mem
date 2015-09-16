@@ -5,12 +5,16 @@ module.exports = {
 }
 
 function get (tasks, getId) {
+  var result = {}
   for (var id in tasks) {
     if (id.indexOf(getId) === 0) {
       var result = {}
       result[id] = tasks[id]
-      return result
     }
   }
-  return {}
+  if (Object.keys(result).length !== 1) {
+    console.log('Error: didn`t get exactly 1 task')
+  } else {
+    return result
+  }
 }
